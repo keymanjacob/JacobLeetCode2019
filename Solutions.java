@@ -673,9 +673,81 @@ Runtime: 0 ms, faster than 100.00% of Java online submissions for Paint House.
 Memory Usage: 26.6 MB, less than 24.14% of Java online submissions for Paint House.
 ===================================================================================================================
 #283. Move Zeroes
+Given an array nums, write a function to move all 0's to the end of it while maintaining the relative order of the non-zero elements.
 
+Example:
 
+Input: [0,1,0,3,12]
+Output: [1,3,12,0,0]
+Note:
+
+You must do this in-place without making a copy of the array.
+Minimize the total number of operations.
+----------------------------------------------------
+class Solution {
+    public void moveZeroes(int[] nums) {
+        for (int lastNonZeroFoundAt = 0, cur = 0; cur < nums.length; cur++ ){
+            if (nums[cur] != 0){
+                // swap nums[cur] and nums[lastNonZeroFoundAt]
+                int temp = nums[cur];
+                nums[cur] = nums[lastNonZeroFoundAt];
+                nums[lastNonZeroFoundAt] = temp;
+                lastNonZeroFoundAt++;
+            }
+        }
+    }
+}
+
+Runtime: 1 ms, faster than 100.00% of Java online submissions for Move Zeroes.
+Memory Usage: 28.1 MB, less than 37.33% of Java online submissions for Move Zeroes.
+======================================================================================================================
 #17. Letter Combinations of a Phone Number
+Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent.
+
+A mapping of digit to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.
 
 
+
+Example:
+
+Input: "23"
+Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
+----------------------------------------------------
+class Solution {
+    Map<String, String> phone = new HashMap<String, String> () {{
+            put("2", "abc");
+            put("3", "def");
+            put("4", "ghi");
+            put("5", "jkl");
+            put("6", "mno");
+            put("7", "pqrs");
+            put("8", "tuv");
+            put("9", "wxyz");
+        }};
+
+    List<String> output = new ArrayList<String>();
+    public void backtrack(String combination, String next_digits){
+        if (next_digits.length() == 0){
+            output.add(combination);
+        } else {
+            String digit = next_digits.substring(0,1);
+            String letters = phone.get(digit);
+            for (int i = 0 ; i < letters.length(); i++){
+                String letter = phone.get(digit).substring(i, i+1);
+                backtrack(combination + letter, next_digits.substring(1));
+            }
+        }
+
+    }
+
+    public List<String> letterCombinations(String digits) {
+        if (digits.length() != 0)
+            backtrack("", digits);
+        return output;
+    }
+}
+
+Runtime: 2 ms, faster than 81.46% of Java online submissions for Letter Combinations of a Phone Number.
+Memory Usage: 26.5 MB, less than 10.63% of Java online submissions for Letter Combinations of a Phone Number.
+=====================================================================================================================
 

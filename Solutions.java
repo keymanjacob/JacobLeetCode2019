@@ -639,6 +639,229 @@ class Solution {
 Runtime: 3 ms, faster than 39.24% of Java online submissions for Fizz Buzz.
 Memory Usage: 27.7 MB, less than 23.73% of Java online submissions for Fizz Buzz.
 =================================================================================================================
+#256. Paint House
+There are a row of n houses, each house can be painted with one of the three colors: red, blue or green. The cost of painting each house with a certain color is different. You have to paint all the houses such that no two adjacent houses have the same color.
+
+The cost of painting each house with a certain color is represented by a n x 3 cost matrix. For example, costs[0][0] is the cost of painting house 0 with color red; costs[1][2] is the cost of painting house 1 with color green, and so on... Find the minimum cost to paint all houses.
+
+Note:
+All costs are positive integers.
+
+Example:
+
+Input: [[17,2,17],[16,16,5],[14,3,19]]
+Output: 10
+Explanation: Paint house 0 into blue, paint house 1 into green, paint house 2 into blue.
+             Minimum cost: 2 + 5 + 3 = 10.
+----------------------------------
+class Solution {
+    public int minCost(int[][] costs) {
+        if(costs==null||costs.length==0)
+            return 0;
+
+        for(int i=1; i<costs.length; i++){
+            costs[i][0] += Math.min(costs[i-1][1], costs[i-1][2]);
+            costs[i][1] += Math.min(costs[i-1][0], costs[i-1][2]);
+            costs[i][2] += Math.min(costs[i-1][0], costs[i-1][1]);
+        }
+
+        int n = costs.length-1;
+        return Math.min(Math.min(costs[n][0], costs[n][1]), costs[n][2]);
+    }
+}
+Runtime: 0 ms, faster than 100.00% of Java online submissions for Paint House.
+Memory Usage: 26.6 MB, less than 24.14% of Java online submissions for Paint House.
+===================================================================================================================
+#283. Move Zeroes
+Given an array nums, write a function to move all 0's to the end of it while maintaining the relative order of the non-zero elements.
+
+Example:
+
+Input: [0,1,0,3,12]
+Output: [1,3,12,0,0]
+Note:
+
+You must do this in-place without making a copy of the array.
+Minimize the total number of operations.
+----------------------------------------------------
+class Solution {
+    public void moveZeroes(int[] nums) {
+        for (int lastNonZeroFoundAt = 0, cur = 0; cur < nums.length; cur++ ){
+            if (nums[cur] != 0){
+                // swap nums[cur] and nums[lastNonZeroFoundAt]
+                int temp = nums[cur];
+                nums[cur] = nums[lastNonZeroFoundAt];
+                nums[lastNonZeroFoundAt] = temp;
+                lastNonZeroFoundAt++;
+            }
+        }
+    }
+}
+
+Runtime: 1 ms, faster than 100.00% of Java online submissions for Move Zeroes.
+Memory Usage: 28.1 MB, less than 37.33% of Java online submissions for Move Zeroes.
+======================================================================================================================
+#17. Letter Combinations of a Phone Number
+Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent.
+
+A mapping of digit to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.
+
+
+
+Example:
+
+Input: "23"
+Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
+----------------------------------------------------
+class Solution {
+    Map<String, String> phone = new HashMap<String, String> () {{
+            put("2", "abc");
+            put("3", "def");
+            put("4", "ghi");
+            put("5", "jkl");
+            put("6", "mno");
+            put("7", "pqrs");
+            put("8", "tuv");
+            put("9", "wxyz");
+        }};
+
+    List<String> output = new ArrayList<String>();
+    public void backtrack(String combination, String next_digits){
+        if (next_digits.length() == 0){
+            output.add(combination);
+        } else {
+            String digit = next_digits.substring(0,1);
+            String letters = phone.get(digit);
+            for (int i = 0 ; i < letters.length(); i++){
+                String letter = phone.get(digit).substring(i, i+1);
+                backtrack(combination + letter, next_digits.substring(1));
+            }
+        }
+
+    }
+
+    public List<String> letterCombinations(String digits) {
+        if (digits.length() != 0)
+            backtrack("", digits);
+        return output;
+    }
+}
+
+Runtime: 2 ms, faster than 81.46% of Java online submissions for Letter Combinations of a Phone Number.
+Memory Usage: 26.5 MB, less than 10.63% of Java online submissions for Letter Combinations of a Phone Number.
+=====================================================================================================================
+#236. Lowest Common Ancestor of a Binary Tree
+Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
+
+According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes p and q as the lowest node in T that has both p and q as descendants (where we allow a node to be a descendant of itself).”
+
+Given the following binary tree:  root = [3,5,1,6,2,0,8,null,null,7,4]
+
+
+
+
+Example 1:
+
+Input: root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 1
+Output: 3
+Explanation: The LCA of nodes 5 and 1 is 3.
+Example 2:
+
+Input: root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 4
+Output: 5
+Explanation: The LCA of nodes 5 and 4 is 5, since a node can be a descendant of itself according to the LCA definition.
+-----------------------------------------------------
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+
+    private TreeNode ans;
+
+    public Solution() {
+        // Variable to store LCA node.
+        this.ans = null;
+    }
+
+    private boolean recurseTree(TreeNode currentNode, TreeNode p, TreeNode q) {
+
+        // If reached the end of a branch, return false.
+        if (currentNode == null) {
+            return false;
+        }
+
+        // Left Recursion. If left recursion returns true, set left = 1 else 0
+        int left = this.recurseTree(currentNode.left, p, q) ? 1 : 0;
+
+        // Right Recursion
+        int right = this.recurseTree(currentNode.right, p, q) ? 1 : 0;
+
+        // If the current node is one of p or q
+        int mid = (currentNode == p || currentNode == q) ? 1 : 0;
+
+
+        // If any two of the flags left, right or mid become True
+        if (mid + left + right >= 2) {
+            this.ans = currentNode;
+        }
+
+        // Return true if any one of the three bool values is True.
+        return (mid + left + right > 0);
+    }
+
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        // Traverse the tree
+        this.recurseTree(root, p, q);
+        return this.ans;
+    }
+}
+
+Runtime: 6 ms, faster than 99.80% of Java online submissions for Lowest Common Ancestor of a Binary Tree.
+Memory Usage: 23.1 MB, less than 21.61% of Java online submissions for Lowest Common Ancestor of a Binary Tree.
+=======================================================================================================================
+#121. Best Time to Buy and Sell Stock
+Say you have an array for which the ith element is the price of a given stock on day i.
+
+If you were only permitted to complete at most one transaction (i.e., buy one and sell one share of the stock), design an algorithm to find the maximum profit.
+
+Note that you cannot sell a stock before you buy one.
+
+Example 1:
+
+Input: [7,1,5,3,6,4]
+Output: 5
+Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.
+             Not 7-1 = 6, as selling price needs to be larger than buying price.
+Example 2:
+
+Input: [7,6,4,3,1]
+Output: 0
+Explanation: In this case, no transaction is done, i.e. max profit = 0.
+------------------------------------------------------
+
+class Solution {
+    public int maxProfit(int[] prices) {
+        int minprice = Integer.MAX_VALUE;
+        int maxprofit = 0;
+        for (int i = 0; i < prices.length; i++){
+            if (prices[i] < minprice)
+                minprice = prices[i];
+            else if (prices[i] - minprice > maxprofit)
+                maxprofit = prices[i] - minprice;
+        }
+        return maxprofit;
+    }
+}
+
+Runtime: 1 ms, faster than 99.88% of Java online submissions for Best Time to Buy and Sell Stock.
+Memory Usage: 27.6 MB, less than 20.22% of Java online submissions for Best Time to Buy and Sell Stock.
+=====================================================================================================================================================
 #7. Reverse Integer
 
 Given a 32-bit signed integer, reverse digits of an integer.
@@ -707,5 +930,4 @@ class Solution {
 Runtime: 3 ms, faster than 64.99% of Java online submissions for Merge Sorted Array.
 Memory Usage: 26.6 MB, less than 7.63% of Java online submissions for Merge Sorted Array.
 =================================================================================================================
-
 

@@ -639,7 +639,73 @@ class Solution {
 Runtime: 3 ms, faster than 39.24% of Java online submissions for Fizz Buzz.
 Memory Usage: 27.7 MB, less than 23.73% of Java online submissions for Fizz Buzz.
 =================================================================================================================
+#7. Reverse Integer
 
+Given a 32-bit signed integer, reverse digits of an integer.
 
+Example 1:
+
+Input: 123
+Output: 321
+Example 2:
+
+Input: -123
+Output: -321
+Example 3:
+
+Input: 120
+Output: 21
+Note:
+Assume we are dealing with an environment which could only store integers within the 32-bit signed integer range: [−231,  231 − 1]. For the purpose of this problem, assume that your function returns 0 when the reversed integer overflows.
+----------------------------------
+class Solution {
+    public int reverse(int x) {
+        boolean isNegative = x<0;
+        String y = String.valueOf(Math.abs(x));
+
+        char[] chars = y.toCharArray();
+        StringBuilder sb = new StringBuilder();
+        for (int i = chars.length-1; i >=0; i--){
+            sb.append(chars[i]);
+        }
+        try {
+            return (isNegative)? -1 * Integer.valueOf(sb.toString()): Integer.valueOf(sb.toString());
+        } catch (NumberFormatException e){
+            return 0;
+        }
+    }
+}
+Runtime: 19 ms, faster than 60.41% of Java online submissions for Reverse Integer.
+Memory Usage: 27.2 MB, less than 5.22% of Java online submissions for Reverse Integer.
+=================================================================================================================
+#88. Merge Sorted Array
+Given two sorted integer arrays nums1 and nums2, merge nums2 into nums1 as one sorted array.
+
+Note:
+
+The number of elements initialized in nums1 and nums2 are m and n respectively.
+You may assume that nums1 has enough space (size that is greater or equal to m + n) to hold additional elements from nums2.
+Example:
+
+Input:
+nums1 = [1,2,3,0,0,0], m = 3
+nums2 = [2,5,6],       n = 3
+
+Output: [1,2,2,3,5,6]
+-----------------------------
+class Solution {
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        int p1 = m-1;
+        int p2 = n-1;
+        int p = m+n-1;
+        while (p1>=0 && p2>=0){
+            nums1[p--] = (nums1[p1] > nums2[p2])? nums1[p1--]:nums2[p2--];
+        }
+        System.arraycopy(nums2, 0, nums1, 0, p2+1);
+    }
+}
+Runtime: 3 ms, faster than 64.99% of Java online submissions for Merge Sorted Array.
+Memory Usage: 26.6 MB, less than 7.63% of Java online submissions for Merge Sorted Array.
+=================================================================================================================
 
 

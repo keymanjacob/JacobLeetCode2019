@@ -1001,4 +1001,113 @@ class Solution {
 Runtime: 82 ms, faster than 73.64% of Java online submissions for Palindrome Number.
 Memory Usage: 40.5 MB, less than 100.00% of Java online submissions for Palindrome Number.
 =================================================================================================================
+#20. Valid Parentheses
+Given a string containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
 
+An input string is valid if:
+
+Open brackets must be closed by the same type of brackets.
+Open brackets must be closed in the correct order.
+Note that an empty string is also considered valid.
+
+Example 1:
+
+Input: "()"
+Output: true
+Example 2:
+
+Input: "()[]{}"
+Output: true
+Example 3:
+
+Input: "(]"
+Output: false
+Example 4:
+
+Input: "([)]"
+Output: false
+Example 5:
+
+Input: "{[]}"
+Output: true
+--------------------------
+class Solution {
+    private HashMap<Character, Character> mappings;
+    public Solution () {
+        this.mappings = new HashMap<Character, Character> ();
+        this.mappings.put (')', '(');
+        this.mappings.put (']', '[');
+        this.mappings.put ('}', '{');
+    }
+    public boolean isValid(String s) {
+        Stack<Character> stack = new Stack<Character>();
+        for( int i = 0 ; i < s.length(); i ++) {
+            char c = s.charAt(i);
+            if (this.mappings.containsKey(c)) {
+                char topElement = stack.empty()? '#': stack.pop();
+                if (topElement != this.mappings.get(c)) {
+                    return false;
+                }
+            } else {
+                stack.push(c);
+            }
+        }
+        return stack.empty();
+    }
+}
+Runtime: 5 ms, faster than 76.76% of Java online submissions for Valid Parentheses.
+Memory Usage: 34.6 MB, less than 100.00% of Java online submissions for Valid Parentheses.
+=================================================================================================================
+#26. Remove Duplicates from Sorted Array
+Given a sorted array nums, remove the duplicates in-place such that each element appear only once and return the new length.
+
+Do not allocate extra space for another array, you must do this by modifying the input array in-place with O(1) extra memory.
+
+Example 1:
+
+Given nums = [1,1,2],
+
+Your function should return length = 2, with the first two elements of nums being 1 and 2 respectively.
+
+It doesn't matter what you leave beyond the returned length.
+Example 2:
+
+Given nums = [0,0,1,1,1,2,2,3,3,4],
+
+Your function should return length = 5, with the first five elements of nums being modified to 0, 1, 2, 3, and 4 respectively.
+
+It doesn't matter what values are set beyond the returned length.
+Clarification:
+
+Confused why the returned value is an integer but your answer is an array?
+
+Note that the input array is passed in by reference, which means modification to the input array will be known to the caller as well.
+
+Internally you can think of this:
+
+// nums is passed in by reference. (i.e., without making a copy)
+int len = removeDuplicates(nums);
+
+// any modification to nums in your function would be known by the caller.
+// using the length returned by your function, it prints the first len elements.
+for (int i = 0; i < len; i++) {
+    print(nums[i]);
+}
+
+----------------------------
+class Solution {
+    public int removeDuplicates(int[] nums) {
+        if (nums.length == 1) return 1;
+        int dupAt = 0;
+        for (int cur = 1; cur < nums.length; cur++) {
+            if (nums[cur]!= nums[dupAt]) {
+                dupAt++;
+                nums[dupAt] = nums[cur];
+            }
+        }
+        return dupAt+1;
+    }
+}
+Runtime: 6 ms, faster than 97.50% of Java online submissions for Remove Duplicates from Sorted Array.
+Memory Usage: 42 MB, less than 100.00% of Java online submissions for Remove Duplicates from Sorted Array.
+=================================================================================================================

@@ -930,4 +930,75 @@ class Solution {
 Runtime: 3 ms, faster than 64.99% of Java online submissions for Merge Sorted Array.
 Memory Usage: 26.6 MB, less than 7.63% of Java online submissions for Merge Sorted Array.
 =================================================================================================================
+#21. Merge Two Sorted Lists
+Merge two sorted linked lists and return it as a new list. The new list should be made by splicing together the nodes of the first two lists.
+
+Example:
+
+Input: 1->2->4, 1->3->4
+Output: 1->1->2->3->4->4
+--------------------------
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        if (l2 == null) {
+            return l1;
+        } else if (l1 == null) {
+            return l2;
+        } else if (l1.val < l2.val){
+            l1.next = mergeTwoLists(l1.next, l2);
+            return l1;
+        } else {
+            l2.next = mergeTwoLists(l1, l2.next);
+            return l2;
+        }
+    }
+}
+Runtime: 7 ms, faster than 72.31% of Java online submissions for Merge Two Sorted Lists.
+Memory Usage: 39.2 MB, less than 100.00% of Java online submissions for Merge Two Sorted Lists.
+
+=================================================================================================================
+#9. Palindrome Number
+Determine whether an integer is a palindrome. An integer is a palindrome when it reads the same backward as forward.
+
+Example 1:
+
+Input: 121
+Output: true
+Example 2:
+
+Input: -121
+Output: false
+Explanation: From left to right, it reads -121. From right to left, it becomes 121-. Therefore it is not a palindrome.
+Example 3:
+
+Input: 10
+Output: false
+Explanation: Reads 01 from right to left. Therefore it is not a palindrome.
+Follow up:
+
+Coud you solve it without converting the integer to a string?
+---------------------------------------
+class Solution {
+    public boolean isPalindrome(int x) {
+        if (x < 0 || (x % 10 == 0 && x > 0)) return false;
+        int revertedNumber = 0;
+        while (x > revertedNumber) {
+            revertedNumber = revertedNumber*10 + x%10;
+            x /= 10;
+        }
+        return (x == revertedNumber) || (x == revertedNumber/10);
+    }
+}
+
+Runtime: 82 ms, faster than 73.64% of Java online submissions for Palindrome Number.
+Memory Usage: 40.5 MB, less than 100.00% of Java online submissions for Palindrome Number.
+=================================================================================================================
 

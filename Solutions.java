@@ -1139,3 +1139,42 @@ class Solution {
 Runtime: 6 ms, faster than 99.94% of Java online submissions for Maximum Subarray.
 Memory Usage: 39.6 MB, less than 100.00% of Java online submissions for Maximum Subarray.
 =================================================================================================================
+#28. Implement strStr()
+Implement strStr().
+
+Return the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.
+
+Example 1:
+
+Input: haystack = "hello", needle = "ll"
+Output: 2
+Example 2:
+
+Input: haystack = "aaaaa", needle = "bba"
+Output: -1
+Clarification:
+
+What should we return when needle is an empty string? This is a great question to ask during an interview.
+
+For the purpose of this problem, we will return 0 when needle is an empty string. This is consistent to C's strstr() and Java's indexOf().
+--------------------------------------
+public class Solution {
+    public int strStr(String haystack, String needle) {
+        int l1 = haystack.length(), l2 = needle.length();
+        if (l1 < l2) {
+            return -1;
+        } else if (l2 == 0) {
+            return 0;
+        }
+        int threshold = l1 - l2;
+        for (int i = 0; i <= threshold; i++) {
+            if (haystack.substring(i,i+l2).equals(needle)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+}
+Runtime: 3 ms, faster than 99.58% of Java online submissions for Implement strStr().
+Memory Usage: 37 MB, less than 100.00% of Java online submissions for Implement strStr().
+=================================================================================================================

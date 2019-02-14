@@ -1125,14 +1125,15 @@ If you have figured out the O(n) solution, try coding another solution using the
 ------------------------------------
 class Solution {
     public int maxSubArray(int[] nums) {
-        if(nums==null || nums.length == 0) return 0;
-        int curSum = 0;
-        int maxSum = Integer.MIN_VALUE;
-        for (int i = 0 ; i < nums.length; i ++) {
-            curSum = Math.max(nums[i], curSum+nums[i]);
-            maxSum = Math.max(maxSum, curSum);
+        int n = nums.length;
+        int[] dp = new int[n];
+        dp[0] = nums[0];
+        int max = dp[0];
+        for (int i  = 1; i < nums.length; i ++) {
+            dp[i] = nums[i] + (dp[i-1]>0? dp[i-1]: 0);
+            max = Math.max(max, dp[i]);
         }
-        return maxSum;
+        return max;
     }
 }
 Runtime: 6 ms, faster than 99.94% of Java online submissions for Maximum Subarray.

@@ -1111,3 +1111,30 @@ class Solution {
 Runtime: 6 ms, faster than 97.50% of Java online submissions for Remove Duplicates from Sorted Array.
 Memory Usage: 42 MB, less than 100.00% of Java online submissions for Remove Duplicates from Sorted Array.
 =================================================================================================================
+#53. Maximum Subarray
+Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.
+
+Example:
+
+Input: [-2,1,-3,4,-1,2,1,-5,4],
+Output: 6
+Explanation: [4,-1,2,1] has the largest sum = 6.
+Follow up:
+
+If you have figured out the O(n) solution, try coding another solution using the divide and conquer approach, which is more subtle.
+------------------------------------
+class Solution {
+    public int maxSubArray(int[] nums) {
+        if(nums==null || nums.length == 0) return 0;
+        int curSum = 0;
+        int maxSum = Integer.MIN_VALUE;
+        for (int i = 0 ; i < nums.length; i ++) {
+            curSum = Math.max(nums[i], curSum+nums[i]);
+            maxSum = Math.max(maxSum, curSum);
+        }
+        return maxSum;
+    }
+}
+Runtime: 6 ms, faster than 99.94% of Java online submissions for Maximum Subarray.
+Memory Usage: 39.6 MB, less than 100.00% of Java online submissions for Maximum Subarray.
+=================================================================================================================

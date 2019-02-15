@@ -1256,3 +1256,64 @@ class Solution {
 Runtime: 1 ms, faster than 100.00% of Java online submissions for Add Binary.
 Memory Usage: 34.7 MB, less than 100.00% of Java online submissions for Add Binary.
 =================================================================================================================
+#206. Reverse Linked List
+Reverse a singly linked list.
+
+Example:
+
+Input: 1->2->3->4->5->NULL
+Output: 5->4->3->2->1->NULL
+Follow up:
+
+A linked list can be reversed either iteratively or recursively. Could you implement both?
+------------------------------------
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+/*
+def reverseList(head):
+    if head is None:
+        return head
+    new_head = head
+    while head.next is not None:
+        current = head.next
+        head.next = head.next.next
+        current.next = new_head
+        new_head = current
+    return new_head
+*/
+
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        if (head == null) return head;
+        ListNode newHead = head;
+        ListNode curr = null;
+        while (head.next != null) {
+            curr = head.next;
+            head.next = head.next.next;
+            curr.next = newHead;
+            newHead = curr;
+        }
+        return newHead;
+    }
+}
+
+// recursive
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        if (head == null || head.next == null) return head;
+        ListNode p = reverseList(head.next);
+        head.next.next = head;
+        head.next = null;
+        return p;
+    }
+}
+Runtime: 0 ms, faster than 100.00% of Java online submissions for Reverse Linked List.
+Memory Usage: 37.8 MB, less than 100.00% of Java online submissions for Reverse Linked List.
+=================================================================================================================

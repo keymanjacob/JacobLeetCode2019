@@ -1220,3 +1220,39 @@ class Solution {
 Runtime: 2 ms, faster than 100.00% of Java online submissions for Search Insert Position.
 Memory Usage: 39.4 MB, less than 100.00% of Java online submissions for Search Insert Position.
 =================================================================================================================
+#67. Add Binary
+Given two binary strings, return their sum (also a binary string).
+
+The input strings are both non-empty and contains only characters 1 or 0.
+
+Example 1:
+
+Input: a = "11", b = "1"
+Output: "100"
+Example 2:
+
+Input: a = "1010", b = "1011"
+Output: "10101"
+---------------------------------
+class Solution {
+    public String addBinary(String a, String b) {
+        if (a==null || b==null) {
+            return (a==null)? b: a;
+        }
+        int carry = 0;
+        StringBuilder sb = new StringBuilder();
+        for (int p = a.length()-1, q = b.length()-1; p>=0 || q>=0|| carry>0; p--, q--) {
+            int sum  = 0;
+            sum += (p>=0)? a.charAt(p)-'0': 0;
+            sum += (q>=0)? b.charAt(q)-'0': 0;
+            sum += carry;
+            carry = sum/2;
+            sum = sum%2;
+            sb.append(sum);
+        }
+        return sb.reverse().toString();
+    }
+}
+Runtime: 1 ms, faster than 100.00% of Java online submissions for Add Binary.
+Memory Usage: 34.7 MB, less than 100.00% of Java online submissions for Add Binary.
+=================================================================================================================

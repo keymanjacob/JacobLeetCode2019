@@ -24,7 +24,7 @@ class Solution {
             int complement = target - nums[i];
             if (map.containsKey(complement)){
                 return new int[] {
-                  map.get(complement), i  
+                  map.get(complement), i
                 };
             }
             map.put(nums[i], i);
@@ -89,8 +89,8 @@ Given a string, find the length of the longest substring without repeating chara
 Example 1:
 
 Input: "abcabcbb"
-Output: 3 
-Explanation: The answer is "abc", with the length of 3. 
+Output: 3
+Explanation: The answer is "abc", with the length of 3.
 Example 2:
 
 Input: "bbbbb"
@@ -100,7 +100,7 @@ Example 3:
 
 Input: "pwwkew"
 Output: 3
-Explanation: The answer is "wke", with the length of 3. 
+Explanation: The answer is "wke", with the length of 3.
              Note that the answer must be a substring, "pwke" is a subsequence and not a substring.
 
 ----------------------------
@@ -199,7 +199,7 @@ class Solution {
         while (strs[i].indexOf(prefix) != 0) {
             prefix = prefix.substring(0, prefix.length() - 1);
             if (prefix.isEmpty()) return "";
-        }        
+        }
     return prefix;
 	}
 }
@@ -283,7 +283,7 @@ class Solution {
         } else {
             int minDepthLeft = minDepth(root.left) ;
             int minDepthRight = minDepth(root.right);
-            return (minDepthLeft==0||minDepthRight==0)? 
+            return (minDepthLeft==0||minDepthRight==0)?
                 minDepthLeft+minDepthRight+1:
                 Math.min(minDepthLeft, minDepthRight)+1;
         }
@@ -337,13 +337,13 @@ class Solution {
         if (root == null) return 0;
         int l = findMaxSum(root.left, res);
         int r = findMaxSum(root.right, res);
-        
+
         int max_single = Math.max((Math.max(l, r)+root.val), root.val);
         int max_top = Math.max(max_single, (l+r+root.val));
         res.val = Math.max(res.val, max_top);
         return max_single;
     }
-    
+
     public int maxPathSum(TreeNode root) {
         Res res = new Res();
         res.val = Integer.MIN_VALUE;
@@ -362,7 +362,7 @@ To represent a cycle in the given linked list, we use an integer pos which repre
 
 Note: Do not modify the linked list.
 
- 
+
 
 Example 1:
 
@@ -385,7 +385,7 @@ Output: no cycle
 Explanation: There is no cycle in the linked list.
 
 
- 
+
 
 Follow up:
 Can you solve it without using extra space?
@@ -399,7 +399,7 @@ public class Solution {
         boolean hasCycle = false;
         while (slow.next != null && fast.next != null && fast.next.next != null) {
             slow = slow.next;
-            fast = fast.next.next; 
+            fast = fast.next.next;
             if (slow == fast) {
                 hasCycle = true;
                 break;
@@ -412,7 +412,7 @@ public class Solution {
             slow = slow.next;
             fast = fast.next;
         }
-        
+
     }
 }
 
@@ -437,26 +437,26 @@ You must use only constant, O(1) extra space.
 Your runtime complexity should be less than O(n2).
 There is only one duplicate number in the array, but it could be repeated more than once.
 ------------------------------------------------
-public class Solution {  
-   public int findDuplicate(int[] nums) {  
-     int n=nums.length-1;  
-     int lo=1, hi=n;  
-     while (lo<hi) {  
-       int mid=lo+(hi-lo)/2;  
-       if (count(nums,lo,mid)>mid-lo+1) hi=mid;  
-       else lo=mid+1;  
-     }  
-     return lo;  
-   }  
-   private int count(int[] nums, int lo, int hi) {  
-     int res=0;  
-     for (int x: nums) {  
-       if (x>=lo && x<=hi) res++;  
-     }  
-     return res;  
-   }  
- }  
- 
+public class Solution {
+   public int findDuplicate(int[] nums) {
+     int n=nums.length-1;
+     int lo=1, hi=n;
+     while (lo<hi) {
+       int mid=lo+(hi-lo)/2;
+       if (count(nums,lo,mid)>mid-lo+1) hi=mid;
+       else lo=mid+1;
+     }
+     return lo;
+   }
+   private int count(int[] nums, int lo, int hi) {
+     int res=0;
+     for (int x: nums) {
+       if (x>=lo && x<=hi) res++;
+     }
+     return res;
+   }
+ }
+
  Runtime: 3 ms, faster than 49.58% of Java online submissions for Find the Duplicate Number.
 Memory Usage: 27.9 MB, less than 6.34% of Java online submissions for Find the Duplicate Number.
 ==============================================================================================================================
@@ -495,7 +495,7 @@ Do not allocate extra space for another array, you must do this by modifying the
 
 You may assume all the characters consist of printable ascii characters.
 
- 
+
 
 Example 1:
 
@@ -543,9 +543,9 @@ solution.shuffle();
 class Solution {
 
     private int[] array;
-    private int[] original;    
+    private int[] original;
     private Random rand = new Random();
-    
+
     private List<Integer> getArrayCopy() {
         List<Integer> list = new ArrayList<Integer>();
         for (int i = 0; i < array.length; i++){
@@ -553,23 +553,23 @@ class Solution {
         }
         return list;
     }
-    
+
     public Solution(int[] nums) {
         array = nums;
         original = nums.clone();
     }
-    
+
     /** Resets the array to its original configuration and return it. */
     public int[] reset() {
         array = original;
         original = original.clone();
         return array;
     }
-    
+
     /** Returns a random shuffling of the array. */
     public int[] shuffle() {
         List<Integer> aux = getArrayCopy();
-        
+
         for (int i = 0; i < array.length; i ++){
             int removeIndex = rand.nextInt(aux.size());
             array[i] = aux.get(removeIndex);
@@ -622,7 +622,7 @@ class Solution {
         List<String> ls = new ArrayList<> ();
         for ( int  i = 1; i <= n; i ++ ){
             String res = "";
-            
+
             if (i%3 == 0) {
                 res += "Fizz";
             }
@@ -1316,4 +1316,53 @@ class Solution {
 }
 Runtime: 0 ms, faster than 100.00% of Java online submissions for Reverse Linked List.
 Memory Usage: 37.8 MB, less than 100.00% of Java online submissions for Reverse Linked List.
+=================================================================================================================
+#929. Unique Email Addresses
+Every email consists of a local name and a domain name, separated by the @ sign.
+
+For example, in alice@leetcode.com, alice is the local name, and leetcode.com is the domain name.
+
+Besides lowercase letters, these emails may contain '.'s or '+'s.
+
+If you add periods ('.') between some characters in the local name part of an email address, mail sent there will be forwarded to the same address without dots in the local name.  For example, "alice.z@leetcode.com" and "alicez@leetcode.com" forward to the same email address.  (Note that this rule does not apply for domain names.)
+
+If you add a plus ('+') in the local name, everything after the first plus sign will be ignored. This allows certain emails to be filtered, for example m.y+name@email.com will be forwarded to my@email.com.  (Again, this rule does not apply for domain names.)
+
+It is possible to use both of these rules at the same time.
+
+Given a list of emails, we send one email to each address in the list.  How many different addresses actually receive mails?
+
+
+
+Example 1:
+
+Input: ["test.email+alex@leetcode.com","test.e.mail+bob.cathy@leetcode.com","testemail+david@lee.tcode.com"]
+Output: 2
+Explanation: "testemail@leetcode.com" and "testemail@lee.tcode.com" actually receive mails
+
+
+Note:
+
+1 <= emails[i].length <= 100
+1 <= emails.length <= 100
+Each emails[i] contains exactly one '@' character.
+----------------------------------------
+class Solution {
+    public int numUniqueEmails(String[] emails) {
+        Set<String> set = new HashSet<>();
+        for(String email : emails) {
+            StringBuilder sb = new StringBuilder();
+            for(char c: email.toCharArray()) {
+                if (c == '.') continue;
+                if (c == '+') break;
+                sb.append(c);
+            }
+            String cur = sb.toString() + email.substring(email.indexOf('@'));
+            set.add(cur);
+        }
+        return set.size();
+    }
+}
+Runtime: 14 ms, faster than 95.34% of Java online submissions for Unique Email Addresses.
+Memory Usage: 40.3 MB, less than 100.00% of Java online submissions for Unique Email Addresses.
 =================================================================================================================

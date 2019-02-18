@@ -1593,4 +1593,45 @@ class Solution {
 Runtime: 6 ms, faster than 99.71% of Java online submissions for Merge k Sorted Lists.
 Memory Usage: 40 MB, less than 100.00% of Java online submissions for Merge k Sorted Lists.
 =================================================================================================================
+#387. First Unique Character in a String
+Given a string, find the first non-repeating character in it and return it's index. If it doesn't exist, return -1.
 
+Examples:
+
+s = "leetcode"
+return 0.
+
+s = "loveleetcode",
+return 2.
+Note: You may assume the string contain only lowercase letters.
+------------------------------
+// class Solution {
+//     public int firstUniqChar(String s) {
+//         Map<Character, Integer> count = new HashMap<Character, Integer> ();
+//         int n = s.length();
+//         for (int i =0; i < n; i++ ){
+//             char c = s.charAt(i);
+//             count.put(c, count.getOrDefault(c, 0) +1);
+//         }
+//         for (int i = 0; i < n; i++) {
+//             if (count.get(s.charAt(i)) == 1)
+//                 return i;
+//         }
+//         return -1;
+//     }
+// }
+public class Solution {
+    public int firstUniqChar(String s) {
+        int freq [] = new int[26];
+        for(int i = 0; i < s.length(); i ++)
+            freq [s.charAt(i) - 'a'] ++;
+        for(int i = 0; i < s.length(); i ++)
+            if(freq [s.charAt(i) - 'a'] == 1)
+                return i;
+        return -1;
+    }
+}
+Runtime: 14 ms, faster than 81.15% of Java online submissions for First Unique Character in a String.
+Memory Usage: 36.8 MB, less than 100.00% of Java online submissions for First Unique Character in a String.
+=================================================================================================================
+#5. Longest Palindromic Substring

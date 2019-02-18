@@ -1517,3 +1517,80 @@ class Solution {
 Runtime: 0 ms, faster than 100.00% of Java online submissions for Path Sum.
 Memory Usage: 38.7 MB, less than 100.00% of Java online submissions for Path Sum.
 =================================================================================================================
+#23. Merge k Sorted Lists
+Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
+
+Example:
+
+Input:
+[
+  1->4->5,
+  1->3->4,
+  2->6
+]
+Output: 1->1->2->3->4->4->5->6
+--------------------------------------------
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+
+/*Divide and Conquer with recursion */
+class Solution {
+    public ListNode mergeKLists(ListNode[] lists) {
+        // Corner cases.
+        if (lists == null || lists.length == 0)
+            return null;
+
+        return mergeKLists(lists, 0, lists.length - 1);
+    }
+
+    private ListNode mergeKLists(ListNode[] lists, int start, int end) {
+        // Base cases.
+        if (end < start) {
+            return null;
+        }
+        if (end - start == 0) {
+            return lists[start];
+        }
+        if (end - start == 1) {
+            return mergeTwoLists(lists[start], lists[end]);
+        }
+
+        // Divide lists into 2 sublists and sort them as a whole recursively.
+        int mid = start + ((end - start) >> 1);
+        ListNode lower = mergeKLists(lists, start, mid);
+        ListNode upper = mergeKLists(lists, mid + 1, end);
+
+        return mergeTwoLists(lower, upper);
+    }
+
+    private ListNode mergeTwoLists(ListNode head1, ListNode head2) {
+        ListNode dummyHead = new ListNode(0), ptr = dummyHead;
+
+        while (head1 != null && head2 != null) {
+            if (head1.val < head2.val) {
+                ptr.next = head1;
+                head1 = head1.next;
+            } else {
+                ptr.next = head2;
+                head2 = head2.next;
+            }
+            ptr = ptr.next;
+        }
+        if (head1 != null) {
+            ptr.next = head1;
+        } else if (head2 != null) {
+            ptr.next = head2;
+        }
+        return dummyHead.next;
+    }
+}
+Runtime: 6 ms, faster than 99.71% of Java online submissions for Merge k Sorted Lists.
+Memory Usage: 40 MB, less than 100.00% of Java online submissions for Merge k Sorted Lists.
+=================================================================================================================
+

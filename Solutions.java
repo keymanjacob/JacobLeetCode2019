@@ -1366,3 +1366,39 @@ class Solution {
 Runtime: 14 ms, faster than 95.34% of Java online submissions for Unique Email Addresses.
 Memory Usage: 40.3 MB, less than 100.00% of Java online submissions for Unique Email Addresses.
 =================================================================================================================
+#83. Remove Duplicates from Sorted List
+Given a sorted linked list, delete all duplicates such that each element appear only once.
+
+Example 1:
+
+Input: 1->1->2
+Output: 1->2
+Example 2:
+
+Input: 1->1->2->3->3
+Output: 1->2->3
+-----------------------------
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        ListNode current = head;
+        while (current != null && current.next != null) {
+            if (current.next.val == current.val) {
+                current.next = current.next.next;
+            } else {
+                current = current.next;
+            }
+        }
+        return head;
+    }
+}
+Runtime: 0 ms, faster than 100.00% of Java online submissions for Remove Duplicates from Sorted List.
+Memory Usage: 37.7 MB, less than 100.00% of Java online submissions for Remove Duplicates from Sorted List.
+=================================================================================================================

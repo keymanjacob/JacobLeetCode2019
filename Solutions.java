@@ -1813,30 +1813,23 @@ Explanation: Intervals [1,4] and [4,5] are considered overlapping.
  * }
  */
 class Solution {
-    private class IntervalComparator implements Comparator<Interval> {
+    private class InternalComparator implements Comparator<Interval> {
         @Override
-        public int compare(Interval a, Interval b) {
-            return a.start < b.start ? -1 : a.start == b.start ? 0 : 1;
+        public int compare (Interval a , Interval b) {
+            return a.start < b.start? -1: a.start == b.start? 0: 1;
         }
     }
 
     public List<Interval> merge(List<Interval> intervals) {
-        Collections.sort(intervals, new IntervalComparator());
-
-        LinkedList<Interval> merged = new LinkedList<Interval>();
-        for (Interval interval : intervals) {
-            // if the list of merged intervals is empty or if the current
-            // interval does not overlap with the previous, simply append it.
+        Collections.sort(intervals, new InternalComparator());
+        LinkedList<Interval> merged = new LinkedList<Interval> ();
+        for (Interval interval: intervals) {
             if (merged.isEmpty() || merged.getLast().end < interval.start) {
                 merged.add(interval);
-            }
-            // otherwise, there is overlap, so we merge the current and previous
-            // intervals.
-            else {
+            } else {
                 merged.getLast().end = Math.max(merged.getLast().end, interval.end);
             }
         }
-
         return merged;
     }
 }
